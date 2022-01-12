@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using MotelListingApi.Configurations;
 using MotelListingApi.Data;
 using System;
 using System.Collections.Generic;
@@ -42,6 +44,8 @@ namespace MotelListingApi
                 .AllowAnyMethod()
                 .AllowAnyHeader());
             });
+
+            services.AddAutoMapper(typeof(MapperInitializer));
 
             services.AddSwaggerGen(c =>
             {
