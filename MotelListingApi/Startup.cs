@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MotelListingApi.Configurations;
 using MotelListingApi.Data;
+using MotelListingApi.Extensions;
 using MotelListingApi.Repository.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -34,7 +36,11 @@ namespace MotelListingApi
 
             services.AddDbContext<DatabaseContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("sqlConnection"))
-            ); 
+            );
+
+            //Calling the ServiceExtension class
+            services.AddAuthentication();
+            services.ConfigureIdentity();
 
             services.AddControllers();
 
