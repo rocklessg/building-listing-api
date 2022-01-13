@@ -5,7 +5,7 @@ namespace MotelListingApi.Dtos.HotelDto
     public class HotelRequestDTO //CreateHotelDto
     {
         [Required]
-        [StringLength(maximumLength: 150, ErrorMessage = "Country Name Is Too Long")]
+        [StringLength(maximumLength: 150, ErrorMessage = "Hotel Name Is Too Long")]
         public string Name { get; set; }
 
         [Required]

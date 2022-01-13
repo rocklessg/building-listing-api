@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MotelListingApi.Configurations;
 using MotelListingApi.Data;
+using MotelListingApi.Repository.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,11 +47,17 @@ namespace MotelListingApi
             });
 
             services.AddAutoMapper(typeof(MapperInitializer));
+            services.AddTransient<IUnitOfWork, UnitOfWork>(); // always create new instance per request
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Motel Listing Api", Version = "v1" });
             });
+
+            //ignore circular reference
+            services.AddControllers().AddNewtonsoftJson(op => 
+            op.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,6 +82,15 @@ namespace MotelListingApi
 
             app.UseEndpoints(endpoints =>
             {
+                //This is a convention-based routing
+                // we're not using it for this project
+                //we're using attribute routing from the controller
+
+                //endpoints.MapControllerRoute(
+                //    name: "default",
+                //    pattern: "{controller=Home}/{action=Index}/{id?}"
+                //    );
+
                 endpoints.MapControllers();
             });
         }
