@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MotelListingApi.Dtos.UserDto
 {
@@ -9,5 +10,7 @@ namespace MotelListingApi.Dtos.UserDto
 
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
+
+        public ICollection<string> Roles { get; set; }
     }
 }
