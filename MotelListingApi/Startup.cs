@@ -14,6 +14,7 @@ using MotelListingApi.Configurations;
 using MotelListingApi.Data;
 using MotelListingApi.Extensions;
 using MotelListingApi.Repository.UnitOfWork;
+using MotelListingApi.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +42,7 @@ namespace MotelListingApi
             //Calling the ServiceExtension class
             services.AddAuthentication();
             services.ConfigureIdentity();
+            services.ConfigureJWT(Configuration);
 
             services.AddControllers();
 
@@ -54,6 +56,7 @@ namespace MotelListingApi
 
             services.AddAutoMapper(typeof(MapperInitializer));
             services.AddTransient<IUnitOfWork, UnitOfWork>(); // always create new instance per request
+            services.AddScoped<IAuthManager, AuthManager>();
 
             services.AddSwaggerGen(c =>
             {
@@ -83,6 +86,8 @@ namespace MotelListingApi
             app.UseCors("AllowAllCorsPolicy");
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
