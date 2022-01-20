@@ -13,8 +13,10 @@ namespace MotelListingApi.Configurations
         {
             CreateMap<Country, CountryResponseDTO>().ReverseMap();
             CreateMap<Country, CountryRequestDTO>().ReverseMap();
+            CreateMap<Country, UpdateCountryDTO>().ReverseMap();
             CreateMap<Hotel, HotelResponseDTO>().ReverseMap();
             CreateMap<Hotel, HotelRequestDTO>().ReverseMap();
+            CreateMap<Hotel, UpdateHotelDTO>().ReverseMap();
             CreateMap<AppUser, UserDTO>().ReverseMap();
         }
     }

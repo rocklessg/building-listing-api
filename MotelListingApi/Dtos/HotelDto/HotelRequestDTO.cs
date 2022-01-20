@@ -17,7 +17,6 @@ namespace MotelListingApi.Dtos.HotelDto
         public double Rating { get; set; }
 
         //Relationships
-        [Required]
         public int CountryId { get; set; }
     }
 }

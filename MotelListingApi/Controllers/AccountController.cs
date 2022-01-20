@@ -85,7 +85,7 @@ namespace MotelListingApi.Controllers
 
                 if (!await _authManager.ValidateUser(userDTO)) 
                 {
-                    return Unauthorized(userDTO); //401
+                    return Unauthorized(); //401
                 }
 
                 return Accepted(new { Token = await _authManager.CreateToken() }); // or OK

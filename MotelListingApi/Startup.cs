@@ -1,24 +1,17 @@
+using AspNetCoreRateLimit;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MotelListingApi.Configurations;
 using MotelListingApi.Data;
 using MotelListingApi.Extensions;
 using MotelListingApi.Repository.UnitOfWork;
 using MotelListingApi.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MotelListingApi
 {
@@ -39,22 +32,37 @@ namespace MotelListingApi
                 options.UseSqlServer(Configuration.GetConnectionString("sqlConnection"))
             );
 
+           
+            //Private cache lives on the server
+            //Proxy cache lives on the network
+
+            // services.AddResponseCaching();
+
             //Calling the ServiceExtension class
+
+            services.AddMemoryCache(); //for rate limit (throttling) 
+            services.ConfigureRateLimiting();
+            services.AddHttpContextAccessor(); // this gives access to a given controller and it inner working when neededHttpCacheHeaders();
+
+            services.ConfigureHttpCacheHeaders();
+
             services.AddAuthentication();
             services.ConfigureIdentity();
             services.ConfigureJWT(Configuration);
 
-            services.AddControllers();
-
+            // COnfiguring CORS
             services.AddCors(o =>
             {
-                o.AddPolicy("AllowAllCorsPolicy", builder =>
+                o.AddPolicy("AllowAll", builder =>
                 builder.AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
             });
 
             services.AddAutoMapper(typeof(MapperInitializer));
+
+            //services.ConfigureAutoMapper();
+
             services.AddTransient<IUnitOfWork, UnitOfWork>(); // always create new instance per request
             services.AddScoped<IAuthManager, AuthManager>();
 
@@ -67,6 +75,9 @@ namespace MotelListingApi
             services.AddControllers().AddNewtonsoftJson(op => 
             op.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
+
+            //Api versioning configuration
+            services.ConfigureVersioning();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,11 +90,22 @@ namespace MotelListingApi
             }
 
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Motel Listing Api v1"));
+            app.UseSwaggerUI(c =>
+            {
+                string swaggerJsonBasePath = string.IsNullOrWhiteSpace(c.RoutePrefix) ? "." : "..";
+                c.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/v1/swagger.json", "Motel Listing API");
+            });
+
+            app.ConfigureExceptionHandler();
 
             app.UseHttpsRedirection();
 
-            app.UseCors("AllowAllCorsPolicy");
+            app.UseCors("AllowAll");
+
+            app.UseResponseCaching();
+            app.UseHttpCacheHeaders();
+
+            //app.UseIpRateLimiting();
 
             app.UseRouting();
 
@@ -93,17 +115,17 @@ namespace MotelListingApi
 
             app.UseEndpoints(endpoints =>
             {
-                //This is a convention-based routing
-                // we're not using it for this project
-                //we're using attribute routing from the controller
-
-                //endpoints.MapControllerRoute(
-                //    name: "default",
-                //    pattern: "{controller=Home}/{action=Index}/{id?}"
-                //    );
-
                 endpoints.MapControllers();
             });
+
+            //This is a convention-based routing
+            // we're not using it for this project
+            //we're using attribute routing from the controller
+
+            //endpoints.MapControllerRoute(
+            //    name: "default",
+            //    pattern: "{controller=Home}/{action=Index}/{id?}"
+            //    );
         }
     }
 }

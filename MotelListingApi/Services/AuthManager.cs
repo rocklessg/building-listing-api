@@ -37,7 +37,7 @@ namespace MotelListingApi.Services
         {
             var jwtSettings = _configuration.GetSection("Jwt");
             var expiration = DateTime.Now.AddMinutes(Convert.ToDouble(
-                jwtSettings.GetSection("Lifetime").Value));
+                jwtSettings.GetSection("lifetime").Value));
 
             var token = new JwtSecurityToken(
                 issuer: jwtSettings.GetSection("Issuer").Value,

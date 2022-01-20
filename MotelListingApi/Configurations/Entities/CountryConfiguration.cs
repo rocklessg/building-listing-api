@@ -28,6 +28,27 @@ namespace MotelListingApi.Configurations.Entities
                     Id = 3,
                     Name = "Ghana",
                     ShortName = "GHA"
+                },
+
+                new Country
+                {
+                    Id = 4,
+                    Name = "Cayman Island",
+                    ShortName = "CI"
+                },
+
+                new Country
+                {
+                    Id = 5,
+                    Name = "Bahamas",
+                    ShortName = "BS"
+                },
+
+                new Country
+                {
+                    Id = 6,
+                    Name = "Canada",
+                    ShortName = "CD"
                 }
             );
         }
