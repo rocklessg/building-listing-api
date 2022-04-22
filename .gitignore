@@ -364,9 +364,10 @@ FodyWeavers.xsd
 
 .vs/
 
-MotelListingApi/appsettings.json
-MotelListingApi/appsettings.[Dd]evelopment.json
-MotelListingApi/Logs
+
+# MotelListingApi/appsettings.json
+# MotelListingApi/appsettings.[Dd]evelopment.json
+# MotelListingApi/Logs
 
 
 

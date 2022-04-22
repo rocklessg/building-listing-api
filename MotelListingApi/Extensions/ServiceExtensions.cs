@@ -32,7 +32,7 @@ namespace MotelListingApi.Extensions
         }
 
         // saved secret KEY on comand prompt run as Admin
-        //setx KEY "GUID values" /M
+        //set KEY "GUID values" /M
         //(/M means it must be a system variable(Environment Variabl) not a local vaeraible)
 
         public static void ConfigureJWT(this IServiceCollection services, IConfiguration Configuration)

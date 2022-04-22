@@ -58,7 +58,7 @@ namespace MotelListingApi.Controllers
         }
 
 
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -73,6 +73,12 @@ namespace MotelListingApi.Controllers
             }
 
             var country = _mapper.Map<Country>(countryDto);
+
+            //if (countryDto.Name == country.Name.ToString())
+            //{
+            //    _logger.LogError($"The country already exist in the database {nameof(CreateCountry)}");
+            //    return BadRequest("Add new Country");
+            //}
             await _unitOfWork.Countries.Insert(country);
             await _unitOfWork.Save();
 

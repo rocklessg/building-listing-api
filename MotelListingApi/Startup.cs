@@ -66,11 +66,13 @@ namespace MotelListingApi
             services.AddTransient<IUnitOfWork, UnitOfWork>(); // always create new instance per request
             services.AddScoped<IAuthManager, AuthManager>();
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Motel Listing Api", Version = "v1" });
-            });
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Motel Listing Api", Version = "v1" });
+            //});
+            services.AddSwagger();
 
+            
             //ignore circular reference
             services.AddControllers().AddNewtonsoftJson(op => 
             op.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
