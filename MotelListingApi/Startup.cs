@@ -32,15 +32,16 @@ namespace MotelListingApi
                 options.UseSqlServer(Configuration.GetConnectionString("sqlConnection"))
             );
 
-           
+
             //Private cache lives on the server
-            //Proxy cache lives on the network
+            //Gateway cache lives on server (Shared)
+            //Proxy cache lives on the network (Shared)
 
             // services.AddResponseCaching();
 
             //Calling the ServiceExtension class
 
-            services.AddMemoryCache(); //for rate limit (throttling) 
+            services.AddMemoryCache(); //for rate limit (throttling)
             services.ConfigureRateLimiting();
             services.AddHttpContextAccessor(); // this gives access to a given controller and it inner working when neededHttpCacheHeaders();
 
@@ -72,9 +73,9 @@ namespace MotelListingApi
             //});
             services.AddSwagger();
 
-            
+
             //ignore circular reference
-            services.AddControllers().AddNewtonsoftJson(op => 
+            services.AddControllers().AddNewtonsoftJson(op =>
             op.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
 
@@ -88,7 +89,7 @@ namespace MotelListingApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                
+
             }
 
             app.UseSwagger();
