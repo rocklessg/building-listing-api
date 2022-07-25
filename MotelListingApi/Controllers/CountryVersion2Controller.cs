@@ -8,7 +8,7 @@ namespace MotelListingApi.Controllers
     [ApiVersion("2.0")]
     [Route("api/[controller]")] // [Route("api/{v:apiversion}/country")]
     [ApiController]
-    
+
     public class CountryVersion2Controller : ControllerBase
     {
         private DatabaseContext _context;
