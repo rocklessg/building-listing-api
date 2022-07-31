@@ -45,7 +45,6 @@ namespace MotelListingApi.Services
                 expires: expiration,
                 signingCredentials: signingCredentials
                 );
-
             return token;
         }
 
@@ -62,11 +61,10 @@ namespace MotelListingApi.Services
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
-
             return claims;
         }
 
-        private SigningCredentials GetSigningCredentials()
+        private static SigningCredentials GetSigningCredentials()
         {
             var key = Environment.GetEnvironmentVariable("KEY");
             var secret = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
