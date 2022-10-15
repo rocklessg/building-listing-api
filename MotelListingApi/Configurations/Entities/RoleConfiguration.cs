@@ -20,7 +20,6 @@ namespace MotelListingApi.Configurations.Entities
                     Name = "Administrator",
                     NormalizedName = "ADMINISTRATOR"
                 }
-                
               );
         }
     }
