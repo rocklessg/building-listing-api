@@ -33,7 +33,7 @@ namespace MotelListingApi.Extensions
 
         // saved secret KEY on comand prompt run as Admin
         //setx KEY "GUID values" /M
-        //(/M means it must be a system variable(Environment Variabl) not a local variable)
+        //(/M means it must be a system variable(Environment Variable) not a local variable)
 
         public static void ConfigureJWT(this IServiceCollection services, IConfiguration Configuration)
         {
@@ -66,7 +66,7 @@ namespace MotelListingApi.Extensions
         //    {
         //        c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         //        {
-        //            Description = @"JWT Authorization header using the Bearer scheme. 
+        //            Description = @"JWT Authorization header using the Bearer scheme.
         //              Enter 'Bearer' [space] and then your token in the text input below.
         //              Example: 'Bearer 12345abcdef'",
         //            Name = "Authorization",

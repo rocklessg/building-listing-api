@@ -12,7 +12,7 @@ namespace MotelListingApi.Extensions
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Motel Listing Api", Version = "v1" });
-                // To Enable authorization using Swagger (JWT) 
+                // To Enable authorization using Swagger (JWT)
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
                     Name = "Authorization",
